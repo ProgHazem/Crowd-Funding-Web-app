@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for i in found_projects %}
+<div class="latest">
+    <img src="{{ i.images.0.image.url }}" >
+    <h3>Project Title</h3>
+    <h2>{{ i.project.title }}</h2>
+    <h3>Project Target</h3>
+    <h2>{{ i.project.total_target}}</h3>
+    <h3>Project Category</h3>
+    <h2>{{ i.project.category }}</h2>
+    <a href=" {% url 'detail' i.project.id %}" target="_blank">See more</a>
+</div>
+{% endfor %}
+<div class="clear"></div>
+{% endblock %}

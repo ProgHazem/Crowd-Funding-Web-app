@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% load commentTemp %}
+{% block content %}
+   <div class="viewproject_container">
+      <div class="similar">
+         <p>Simillar Projrcts:</p>
+         <ul>
+            {% for i in similar_projects %}
+               <li><a href=" {% url 'detail' i.id %} ">{{ i.title }}</a></li>
+            {% endfor %}
+         </ul>
+      </div>
+      <div class="cancel">
+         {% if authority == "report" %}
+            <a href="{%url 'report' Projectdata.id %}">Report</a>
+         {% elif authority == "cancel" %} 
+            <a href="{%url 'delete' Projectdata.id %}">Cancel Project</a>
+         {% endif %}
+      </div>
+      <div class="clear"></div>
+      <div class="project_info">
+         <h2>Project Title</h2>
+         <h3>{{Projectdata.title}}</h3>
+         <h2>Project Target</h2>
+         <h3>{{Projectdata.total_target}}</h3>
+         <h2>Current Donation</h2>
+         <h3>{{total_donation}}</h3>
+         <h2>Project Category</h2>
+         <h3>{{Projectdata.category}}</h3>
+         <h2>Project Details</h2>
+         <h3>{{Projectdata.details}}</h3>
+         <h2>Project Start Date</h2>
+         <h3>{{Projectdata.start_time}}</h3>
+         <h2>Project End Date</h2>
+         <h3>{{Projectdata.end_time}}</h3>
+         <h2>Project Tags</h2>
+         <h3>
+            {% for t  in tags %}
+            <span>{{t.tags}}</span>
+            {% endfor %}
+         </h3>
+         <h2>Project Rate</h2>
+         <h3>{{rate}}</h3>
+         <h2>Project Images</h2>
+         <h3>
+            {% for i  in image %}
+            <span>{{image.image}}</span>
+            <img src="{{i.image.url}}">
+            {% endfor %}
+         </h3>
+         <div class="clear"></div>
+         <form action="{%url 'donate' Projectdata.id %}" method="post"> 
+            {% csrf_token %}
+            {{ donate_form.as_p}}
+            <input type="submit" value="Donate">
+         </form>
+         <form action="{%url 'rate' Projectdata.id %}" method="post"> 
+            {% csrf_token %}
+            {{ rate_form.as_p}}
+            <input type="submit" value="Rate">
+         </form>
+         {% for i  in comments %}
+         <div class="view_comments">
+            <h3>{{ i.user_id.username }}</h3>
+            <h4>{{i.comment}}</h4>
+            {% if i.user_id.id == currentUser %}
+               <a href="{%url 'deleteComment' i.id Projectdata.id%}">Delete</a>
+               {% elif i.id|filter_comment_report:currentUser   %} 
+               <a href="{%url 'reportComment' i.id Projectdata.id %}">Report</a>
+            {% endif %}
+         </div>
+         {% endfor %}
+         <div class="write_comment">
+            <form action="{%url 'comment' Projectdata.id %}" method="post"> 
+               {% csrf_token %}
+               {{ form.as_p}}
+               <input type="submit" value="Comment">
+            </form>
+         </div>
+      </div>
+      
+   </div>
+  
+  {% endblock %}

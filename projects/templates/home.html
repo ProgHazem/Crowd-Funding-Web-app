@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="index_container">    
+    <div id="slider">
+        <figure>
+            {% if top5|length > 0 %}
+                {% for i in top5 %}
+                    <div class="main">
+                        <div class="top" style="background-image:url('{{ i.images.0.image.url }}')">
+                            <h2>{{ i.project.title }}</h2>
+                            <a href="{% url 'detail' i.project.id %}">Fund Me</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </figure>
+    </div>
+</div>
+
+
+
+
+
+{% if admin_choice|length > 0 %}
+    <h1 class="text-center">Latest featured projects </h1>
+    {% for i in admin_choice %}
+        <div class="latest">
+            <img src="{{ i.images.0.image.url }}" >
+            <h3>Project Title</h3>
+            <h2>{{ i.project.title }}</h2>
+            <h3>Project Target</h3>
+            <h2>{{ i.project.total_target }}</h2>
+            <h3>Project Category</h3>
+            <h2>{{ i.project.category }}</h2>
+            <a href=" {% url 'detail' i.project.id %} ">See more</a>
+        </div>
+        
+    {% endfor %}
+{% endif %}
+<div class="clear"></div>
+{% if latest_projects|length > 0 %}
+    <h1 class="text-center">Latest added projects</h1>
+    {% for i in latest_projects %}
+        <div class="latest">
+            <img src="{{ i.images.0.image.url }}" >
+            <h3>Project Title</h3>
+            <h2>{{ i.project.title }}</h2>
+            <h3>Project Target</h3>
+            <h2>{{ i.project.total_target}}</h3>
+            <h3>Project Category</h3>
+            <h2>{{ i.project.category }}</h2>
+            <a href=" {% url 'detail' i.project.id %}">See more</a>
+        </div>
+    {% endfor %}
+{% endif %}
+<div class="clear"></div>
+{% endblock %}

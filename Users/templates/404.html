@@ -1,0 +1,6 @@
+{% extends 'layout.html' %}
+{% block title %} 404 Error {% endblock %}
+{% block content %}
+    {% load static %}
+    <img src="{% static '404.png' %}" alert="Error" class="text-center img-responsive" />
+{% endblock %}

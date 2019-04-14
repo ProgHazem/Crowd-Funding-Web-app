@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+<!-- {{addtionalinfo.birth}} -->
+<div class="container">
+    <form action="{% url 'editprofile' userinfo.id %}" method="post">
+        <h1 class="text-center mb-4">Profile Information</h1>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <label for="username">UserName</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username " value="{{ userinfo.username }}">
+                </div>
+                <div class="row">
+                    <label for="email">Email</label>
+                    <input type="email" readonly class="form-control" id="email" name="email" placeholder="Enter email " value="{{ userinfo.email }}">
+                </div>
+                <div class="row">
+                    <label for="country">Country</label>
+                    <input type="text" class="form-control" id="country" name="country" placeholder="Enter country " value="{{ addtionalinfo.country }}">
+                </div>
+                <div class="row">
+                    <label for="phone">Phone</label>
+                    <input type="tel" class="form-control" id="Phone" name="phone" placeholder="Enter Phone " value="{{ addtionalinfo.phone }}" pattern="^01[0|1|2|5][0-9]{8}$">
+                </div>
+                <div class="row">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" class="form-control" id="birthday" name="birth" placeholder="Enter birthday " value="{{ addtionalinfo.birth }}">
+                </div>
+                <div class="row">
+                    <label for="social_media">Social Media</label>
+                    <input type="url" class="form-control" id="social_media" name="social_media" placeholder="Enter social media " value="{{ addtionalinfo.social_media }}" >
+                </div>
+            </div>
+            <div class="col-lg-3 pull-right">
+                <div class="row">
+                    <img src="{{ addtionalinfo.image.url }}" width="100" height="100" style="display:block;border-radius: 50%;border: 3px solid #222;" alert="Avatar"/>
+                </div>
+            </div>
+        </div>
+        <!-- Send button -->
+        <div class="row" style="margin-top:8px;">
+            <div class="col-lg-8">
+                <button class="btn btn-info btn-block" type="submit">Update</button>
+            </div>
+        </div>
+    </form>
+
+    <h1 class="text-center">My Projects</h1>
+
+
+
+
+    {% for userpro in userproject %}
+    <div class="latest">
+        <img src="{{ userpro.images.0.image.url }}" >
+        <h3>Project Title</h3>
+        <h2>{{userpro.title}}</h2>
+        <h3>Project Target</h3>
+        <h2>{{userpro.total_target}}</h3>
+        <h3>Project Category</h3>
+        <h2>{{userpro.category}}</h2>
+        <a href=" {% url 'detail' userpro.id %}" target="_blank">See more</a> 
+    </div>
+    {% endfor %}
+    <div class="clear"></div>
+    
+</div>
+
+{% endblock %}

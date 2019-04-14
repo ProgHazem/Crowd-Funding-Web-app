@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}User{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/layout.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/addproject.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/viewproject.css' %}" />
+    </head>
+    <body>
+        <div class="header">
+            <div class="logo">
+                <h1><a href="{% url 'index' %}">Fund Me</a></h1>
+            </div>
+            <div class="menu">
+                
+                <div class="search">
+                    <form action="{% url 'search' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="search" placeholder="Type # to search by tags,or your word to search by title">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+                <div class="add_project">
+                    <a href="{%url 'addproject'  %}">Add Project</a>
+                </div>
+                <div class="categories">
+                    <ul>Categories
+                        {% for i in categories %}
+                            <li><a href="{% url 'category_projects' i.id %}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="my_profile">
+                    <a href="{% url 'profile' user.username%}">My Profile</a>
+                </div>
+                <div class="logout">
+                    <a href="{%url 'logout'%}">Logout</a>
+                </div>
+            </div>
+            
+            <div class="clear"></div>
+        </div>
+        {% block content %}
+            <h1 class="text-center">Nothing Found</h1>
+        {% endblock %}
+
+        <div class="footer">
+            <h4 class="text-center">This is project has done by (Naguib , Hazem , Amr , Eman)</h4>
+        </div>
+        {% load static %}
+        <script src="{% static 'js/jQueryv3.3.1.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/layout.js' %}"></script>
+    </body>
+</html>
